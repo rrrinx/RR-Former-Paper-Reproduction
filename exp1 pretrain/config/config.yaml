@@ -1,0 +1,44 @@
+device: &device 'cuda'
+seed: 42
+days: &days 7
+seg: 0
+res_path: './res'
+
+data:
+  path: './dataset/processed_data'
+  split_rate:
+    train_rate: 0.45
+    valid_rate: 0.15
+    test_rate: 0.40
+  seq_len: &seq_len 22
+  tar_len: *days
+  batch_size: 512
+  d_features: 5
+  num_workers: 0
+
+model:
+  d_model: 64
+  d_features: 5
+  n_head: 4
+  dropout: 0.1
+  n_layers: 4
+  d_hidden: 256
+  seq_len: *seq_len
+  tar_len: *days
+
+
+train:
+  learning_rate: 1e-3
+  weight_decay: 0.0
+  patience: 50
+  epochs: 50
+  days: *days
+  device: *device
+  save_dir: './pt'
+
+img:
+  save_dir: './img'
+
+execution_target: 'all'
+# [['03','02246000'], ['03', '02381600'], ['04', '04015330'], ['05', '03049800'], ['15','09505200'], ['07', '05507600'], ['10', '06344600']]
+# 0.70, 0.62, 0.58, 0.75, 0.77 , 1.01, 0.92
